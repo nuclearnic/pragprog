@@ -1,11 +1,10 @@
-greeter = fn -> (
-            fn name ->
+greeter = fn name -> (
+            fn ->
               IO.puts "Hello #{name}"
             end
           )
           end
 
 
-greetings = greeter.()
-
-greetings.("Tenderlove")
+tender_greeter = greeter.("Tenderlove")
+tender_greeter.()
