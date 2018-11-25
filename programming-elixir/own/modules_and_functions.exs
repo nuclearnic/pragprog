@@ -7,18 +7,24 @@ defmodule Recursively do
 end
 
 defmodule Chop do
-  def guess(actual, range) do
-    make_guess(actual, middle(range), range)
+  def guess(actual, min..max) when actual < min or actual > max,
+    do: "Number not within range. Exiting..."
+
+  def guess(actual, min..max) do
+    attempt = div(min+max, 2)
+    IO.puts "Is it #{attempt}"
+    guess(actual, min..max , attempt)
   end
-  def make_guess(actual, actual, _), do: IO.puts "#{actual}"
-  def make_guess(actual, guess, range) when actual < guess do
-    make_guess(actual, middle(range), Enum.min(range)..(guess-1))
-  end
-  def make_guess(actual, guess, range) when actual > guess do
-    # IO.puts "Elixir guess #{guess}"
-    make_guess(actual, middle(range), (guess+1)..Enum.max(range))
-  end
-  def middle(range) do
-    Enum.min(range) + div((Enum.max(range)-Enum.min(range)), 2)
-  end
+
+  defp guess(attempt, _, attempt), do: IO.puts attempt
+
+  defp guess(actual, _..max, attempt) when attempt < actual,
+    do: guess(actual, attempt+1..max)
+
+  defp guess(actual, min.._, attempt) when attempt > actual,
+    do: guess(actual, min..attempt-1)
+end
+
+defmodule  do
+
 end
